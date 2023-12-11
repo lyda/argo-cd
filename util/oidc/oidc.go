@@ -17,6 +17,7 @@ import (
 	gooidc "github.com/coreos/go-oidc/v3/oidc"
 	"github.com/golang-jwt/jwt/v4"
 	log "github.com/sirupsen/logrus"
+	"github.com/yuin/goldmark/text"
 	"golang.org/x/oauth2"
 
 	"github.com/argoproj/argo-cd/v2/common"
@@ -288,7 +289,8 @@ func (a *ClientApp) HandleLogin(w http.ResponseWriter, r *http.Request) {
 	returnURL := r.FormValue("return_url")
 	// Check if return_url is valid, otherwise abort processing (see https://github.com/argoproj/argo-cd/pull/4780)
 	if !isValidRedirectURL(returnURL, []string{a.settings.URL}) {
-		log.Errorf("Invalid redirect URL: %s is not a valid per the settings %s.", returnURL, a.settings.URL)
+		log.Errorf("Invalid redirect URL: %s is not a valid per the settings %s.",
+			strings.Replace(text.Trunc(returnURL, 160), "\n", "", -1), a.settings.URL)
 		http.Error(w, "Invalid redirect URL: the protocol and host (including port) must match and the path must be within allowed URLs if provided", http.StatusBadRequest)
 		return
 	}
