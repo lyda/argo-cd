@@ -17,7 +17,6 @@ import (
 	gooidc "github.com/coreos/go-oidc/v3/oidc"
 	"github.com/golang-jwt/jwt/v4"
 	log "github.com/sirupsen/logrus"
-	"github.com/yuin/goldmark/text"
 	"golang.org/x/oauth2"
 
 	"github.com/argoproj/argo-cd/v2/common"
@@ -27,6 +26,7 @@ import (
 	httputil "github.com/argoproj/argo-cd/v2/util/http"
 	"github.com/argoproj/argo-cd/v2/util/rand"
 	"github.com/argoproj/argo-cd/v2/util/settings"
+	"github.com/argoproj/argo-cd/v2/util/text"
 )
 
 var InvalidRedirectURLError = fmt.Errorf("invalid return URL")
